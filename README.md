@@ -146,14 +146,15 @@ Reinicia los estados de error de los campos *txt_nombre*, *txt_control* y *txt_e
 ```python
 formulario_valido = True
 ```
-#### Validaciín de nombre
+Se utiliza para controlar si el formulario cumple con todas las validaciones. Inicialmente se establece en *True* asumiendo que todo está correcto; sin embargo, si durante las validaciones se detecta algún error (campo vacío, formato incorrecto, etc.), esta variable cambia a *False*.
+#### Validación de nombre
 ```python
         if not txt_nombre.value or not txt_nombre.value.strip():
             txt_nombre.error_text = "El nombre es obligatorio"
             txt_nombre.border_color = "red"
             formulario_valido = False
 ```
-Se utiliza para controlar si el formulario cumple con todas las validaciones. Inicialmente se establece en *True* asumiendo que todo está correcto; sin embargo, si durante las validaciones se detecta algún error (campo vacío, formato incorrecto, etc.), esta variable cambia a *False*.
+La condición *if not txt_nombre.value or not txt_nombre.value.strip()* verifica si el usuario no escribió nada o si solo ingresó espacios en blanco. Si se cumple la condición, se muestra el mensaje “El nombre es obligatorio”, el borde del campo cambia a color rojo para indicar error visualmente y la variable *formulario_valido* se establece en *False*, impidiendo que el formulario se envíe hasta que el usuario corrija el campo.
 #### Validación de número de control
 ```python
         if not txt_control.value or not txt_control.value.strip():
@@ -169,8 +170,8 @@ Se utiliza para controlar si el formulario cumple con todas las validaciones. In
             txt_control.border_color = "#4D2A32"
 ```
 Primero verifica si el campo está vacío o contiene solo espacios; si es así, muestra el mensaje **“El No. de Control es obligatorio”**, cambia el borde a rojo y marca *formulario_valido = False*. Luego, con *elif*, comprueba si el valor contiene únicamente números usando *.isdigit()*; si no es numérico, muestra el mensaje **“Solo se permiten números”** y también marca error. Finalmente, en el *else*, si todo es correcto, elimina cualquier mensaje de error y restablece el color original del borde, indicando que el campo es válido.
+#### Validación de email
 ```python
-        # Validacion email
         if not txt_email.value or not txt_email.value.strip():
             txt_email.error_text = "El Gmail es obligatorio"
             txt_email.border_color = "red"
@@ -186,11 +187,19 @@ Primero verifica si el campo está vacío o contiene solo espacios; si es así, 
         if not formulario_valido:
             page.update()
             return
+```
+Verifica si está vacío o contiene solo espacios; si es así, muestra el mensaje **“El Gmail es obligatorio”**, cambia el borde a rojo y marca el formulario como inválido. Luego, con *elif*, usa *re.match(patron_email, txt_email.value)* para comprobar que el correo tenga un formato correcto; si no coincide con el patrón, muestra el mensaje **“Formato de correo inválido”** y también marca error. En el *else*, si el correo es válido, elimina el mensaje de error y restablece el color original del borde.
 
+Finalmente, *if not formulario_valido:* comprueba si hubo algún error en cualquier campo; si es así, ejecuta *page.update()* para reflejar los mensajes en pantalla y return para detener la ejecución, evitando que se guarde la información hasta que todo esté correcto.
+#### Obtención y validación final de datos seleccionados
+```python
         carrera_seleccionada = dd_carrera.value if dd_carrera.value else "No seleccionada"
         semestre_seleccionado = dd_semestre.value if dd_semestre.value else "No seleccionado"
         seleccion_genero = genero.value if genero.value else "No especificado"
-
+```
+Obtiene los valores seleccionados en los controles *Dropdown* y *RadioGroup*. Utiliza una expresión condicional para verificar si el usuario seleccionó una opción. Si *dd_carrera.value* tiene un valor, se guarda en *carrera_seleccionada*; de lo contrario, se asigna el texto "No seleccionada". Lo mismo ocurre con *dd_semestre* y *genero*. Esto evita que se muestren valores vacíos y garantiza que siempre haya un texto definido cuando se muestre la información en el diálogo.
+#### Visualización del cuadro de diálogo con los datos registrados
+```python   
         dialog.content = ft.Container(
             content=ft.Column(
                 controls=[
@@ -211,6 +220,7 @@ Primero verifica si el campo está vacío o contiene solo espacios; si es así, 
         dialog.open = True
         page.update()
 ```
+Define el contenido del cuadro de diálogo que se mostrará después de que el formulario sea válido. Se asigna a *dialog.content* un *ft.Container* que contiene una *ft.Column* con varios *ft.Text*, donde se muestran los datos ingresados por el usuario (nombre, número de control, correo, carrera, semestre y género). La propiedad *spacing=10* agrega espacio entre cada línea y *tight=True* ajusta el diseño para que sea más compacto, mientras que *width=400* y *padding=20* controlan el tamaño y el espacio interno del cuadro. Finalmente, *dialog.open = True* abre el diálogo y *page.update()* actualiza la interfaz para que el usuario pueda ver la información guardada en pantalla.
 ### Botón de Enviar
 ```python
  btn_enviar = ft.Button(
