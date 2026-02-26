@@ -50,22 +50,7 @@ def main(page: ft.Page):
         filled=True,
         fill_color=ft.Colors.WHITE
     )
-
-    # Campos que se integrarán como Dropdowns posteriormente
-    txt_carrera = ft.TextField(
-        label="Carrera",
-        expand=True,
-        border_color="#4D2A32",
-        fill_color=ft.Colors.WHITE
-    )
-
-    txt_semestre = ft.TextField(
-        label="Semestre",
-        expand=True,
-        border_color="#4D2A32",
-        fill_color=ft.Colors.WHITE
-    )
-
+    
     # Contenedor para Genero
     genero = ft.RadioGroup(
         content=ft.Row(
