@@ -265,5 +265,6 @@ ft.run(main)
 [Da click aquí para ver el código](./Formulario.py)
 
 <img width="1918" height="874" alt="Captura de pantalla 2026-02-24 232443" src="https://github.com/user-attachments/assets/f508b733-5cc6-41c1-98ba-bfa21669748b" />
-<img width="1918" height="874" alt="Captura de pantalla 2026-02-24 232443" src="https://github.com/user-attachments/assets/f508b733-5cc6-41c1-98ba-bfa21669748b" />
+<img width="1916" height="863" alt="Captura de pantalla 2026-02-24 232533" src="https://github.com/user-attachments/assets/1c58bebc-f0ab-48d5-ae08-51657539d2a0" />
+
 
