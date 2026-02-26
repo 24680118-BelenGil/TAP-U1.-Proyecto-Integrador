@@ -214,6 +214,7 @@ Creamos un cuadro de diálogo emergente *(AlertDialog)* llamado **dialog**, que 
         on_click=guardar_click
     )
 ```
+Este bloque crea el botón btn_enviar utilizando *ft.Button*, el cual mostrará el texto “Enviar” con color negro y tamaño 16. Se le asigna un fondo gris *(bgcolor=ft.Colors.GREY_500)* y un ancho igual al de la página *(width=page.width)* para que ocupe todo el espacio horizontal disponible. En style se define que el botón tenga bordes rectos *(radius=0)*. Finalmente, la propiedad *on_click=guardar_click* conecta el botón con la función que valida y guarda la información cuando el usuario hace click.
 ### Agregar Controles a la Página
 ```python
  page.add(
@@ -232,8 +233,13 @@ Creamos un cuadro de diálogo emergente *(AlertDialog)* llamado **dialog**, que 
         )
     )
 ```
-### Ejecutar la Aplicación
+Este bloque agrega todos los controles del formulario a la página y los organiza usando *ft.Column*, que hace que los elementos se muestren uno debajo del otro. Dentro de la columna se colocan los campos de nombre, número de control y correo, luego un *ft.Row* acomoda horizontalmente los dropdown de carrera y semestre, seguido del grupo de género y el botón enviar. Además, *spacing=15* agrega espacio entre los elementos, *scroll=ft.ScrollMode.AUTO* permite desplazamiento si el contenido es grande y *tight=True* ajusta el espacio interno para que el diseño sea más compacto y ordenado.
+### Ejecutar la Aplicación 🚀
 ```python
 ft.run(main)
 ```
+* Ejecuta la función main.
+* Crea la ventana o entorno web.
+* Construye la interfaz gráfica.
+* Mantiene la aplicación en ejecución esperando eventos (clics, entradas, etc.).
 ## Resultado
