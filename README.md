@@ -128,8 +128,10 @@ Creamos un cuadro de diálogo emergente *(AlertDialog)* llamado **dialog**, que 
 ```python
  def guardar_click(e):
         print("click")
-
-        # Resetear estados de error previos
+```
+Define la función *guardar_click(e)*, que es la función que se ejecuta cuando el usuario hace clic en el botón Enviar. El parámetro *e* representa el evento del click (evento de tipo click).
+#### Rastrear errores
+```python
         txt_nombre.error_text = None
         txt_nombre.border_color = "#4D2A32"
 
@@ -138,17 +140,22 @@ Creamos un cuadro de diálogo emergente *(AlertDialog)* llamado **dialog**, que 
 
         txt_email.error_text = None
         txt_email.border_color = "#4D2A32"
-
-        # Variable bandera
-        formulario_valido = True
-
-        # Validacion nombre
+```
+Reinicia los estados de error de los campos *txt_nombre*, *txt_control* y *txt_email* antes de realizar una nueva validación. Al asignar *error_text = None*, se eliminan los mensajes de error mostrados previamente, y al restablecer *border_color = "#4D2A32"*, se devuelve el color original del borde (quitando el rojo si hubo error). Esto permite que cada vez que se presione el botón, la validación comience “limpia” y no conserve errores anteriores.
+#### Variable bandera
+```python
+formulario_valido = True
+```
+#### Validaciín de nombre
+```python
         if not txt_nombre.value or not txt_nombre.value.strip():
             txt_nombre.error_text = "El nombre es obligatorio"
             txt_nombre.border_color = "red"
             formulario_valido = False
-
-        # Validacion numero de control
+```
+Se utiliza para controlar si el formulario cumple con todas las validaciones. Inicialmente se establece en *True* asumiendo que todo está correcto; sin embargo, si durante las validaciones se detecta algún error (campo vacío, formato incorrecto, etc.), esta variable cambia a *False*.
+#### Validación de número de control
+```python
         if not txt_control.value or not txt_control.value.strip():
             txt_control.error_text = "El No. de Control es obligatorio"
             txt_control.border_color = "red"
@@ -160,7 +167,9 @@ Creamos un cuadro de diálogo emergente *(AlertDialog)* llamado **dialog**, que 
         else:
             txt_control.error_text = None
             txt_control.border_color = "#4D2A32"
-
+```
+Primero verifica si el campo está vacío o contiene solo espacios; si es así, muestra el mensaje **“El No. de Control es obligatorio”**, cambia el borde a rojo y marca *formulario_valido = False*. Luego, con *elif*, comprueba si el valor contiene únicamente números usando *.isdigit()*; si no es numérico, muestra el mensaje **“Solo se permiten números”** y también marca error. Finalmente, en el *else*, si todo es correcto, elimina cualquier mensaje de error y restablece el color original del borde, indicando que el campo es válido.
+```python
         # Validacion email
         if not txt_email.value or not txt_email.value.strip():
             txt_email.error_text = "El Gmail es obligatorio"
