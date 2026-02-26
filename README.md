@@ -126,22 +126,114 @@ Crea un grupo de botones de opción (RadioGroup) llamado genero, que permie sele
 Creamos un cuadro de diálogo emergente *(AlertDialog)* llamado **dialog**, que mostrará un mensaje con el título **“Información Guardada”** cuando se active. La propiedad *on_dismiss* define una función que se ejecuta cuando el usuario cierra el diálogo. Finalmente, *page.overlay.append(dialog)* agrega el diálogo a la capa superior de la página *(overlay)*, lo que permite que pueda mostrarse encima del contenido principal cuando se establezca *dialog.open = True*.
 ### Función de Guardado
 ```python
-import flet as ft
-import re
+ def guardar_click(e):
+        print("click")
+
+        # Resetear estados de error previos
+        txt_nombre.error_text = None
+        txt_nombre.border_color = "#4D2A32"
+
+        txt_control.error_text = None
+        txt_control.border_color = "#4D2A32"
+
+        txt_email.error_text = None
+        txt_email.border_color = "#4D2A32"
+
+        # Variable bandera
+        formulario_valido = True
+
+        # Validacion nombre
+        if not txt_nombre.value or not txt_nombre.value.strip():
+            txt_nombre.error_text = "El nombre es obligatorio"
+            txt_nombre.border_color = "red"
+            formulario_valido = False
+
+        # Validacion numero de control
+        if not txt_control.value or not txt_control.value.strip():
+            txt_control.error_text = "El No. de Control es obligatorio"
+            txt_control.border_color = "red"
+            formulario_valido = False
+        elif not txt_control.value.isdigit():
+            txt_control.error_text = "Solo se permiten números"
+            txt_control.border_color = "red"
+            formulario_valido = False
+        else:
+            txt_control.error_text = None
+            txt_control.border_color = "#4D2A32"
+
+        # Validacion email
+        if not txt_email.value or not txt_email.value.strip():
+            txt_email.error_text = "El Gmail es obligatorio"
+            txt_email.border_color = "red"
+            formulario_valido = False
+        elif not re.match(patron_email, txt_email.value):
+            txt_email.error_text = "Formato de correo inválido (ejemplo@gmail.com)"
+            txt_email.border_color = "red"
+            formulario_valido = False
+        else:
+            txt_email.error_text = None
+            txt_email.border_color = "#4D2A32"
+
+        if not formulario_valido:
+            page.update()
+            return
+
+        carrera_seleccionada = dd_carrera.value if dd_carrera.value else "No seleccionada"
+        semestre_seleccionado = dd_semestre.value if dd_semestre.value else "No seleccionado"
+        seleccion_genero = genero.value if genero.value else "No especificado"
+
+        dialog.content = ft.Container(
+            content=ft.Column(
+                controls=[
+                    ft.Text(f"Nombre: {txt_nombre.value}"),
+                    ft.Text(f"No. Control: {txt_control.value}"),
+                    ft.Text(f"Gmail: {txt_email.value}"),
+                    ft.Text(f"Carrera: {carrera_seleccionada}"),
+                    ft.Text(f"Semestre: {semestre_seleccionado}"),
+                    ft.Text(f"Género: {seleccion_genero}")
+                ],
+                tight=True,
+                spacing=10
+            ),
+            width=400,
+            padding=20
+        )
+
+        dialog.open = True
+        page.update()
 ```
 ### Botón de Enviar
 ```python
-import flet as ft
-import re
+ btn_enviar = ft.Button(
+        content=ft.Text("Enviar", color="black", size=16),
+        bgcolor=ft.Colors.GREY_500,
+        width=page.width,
+        style=ft.ButtonStyle(
+            shape=ft.RoundedRectangleBorder(radius=0),
+        ),
+        on_click=guardar_click
+    )
 ```
 ### Agregar Controles a la Página
 ```python
-import flet as ft
-import re
+ page.add(
+        ft.Column(
+            [
+                txt_nombre,
+                txt_control,
+                txt_email,
+                ft.Row([dd_carrera, dd_semestre], spacing=10),
+                row_genero,
+                btn_enviar
+            ],
+            spacing=15,
+            scroll=ft.ScrollMode.AUTO,
+            tight=True
+        )
+    )
 ```
 ### Ejecutar la Aplicación
 ```python
-import flet as ft
-import re
+ft.run(main)
 ```
 ## Resultado
